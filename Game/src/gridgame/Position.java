@@ -1,3 +1,4 @@
+package gridgame;
 
 //Class representing Positions as integer duples.
 public class Position {
