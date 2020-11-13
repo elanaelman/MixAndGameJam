@@ -55,9 +55,9 @@ public class Board {
 		return false;
 	}
 	
-	public boolean isWall(int x, int y) {
+	public boolean isWall(int r, int c) {
 		for (Position q : walls) {
-			if (q.equals(x, y)) return true;
+			if (q.equals(r, c)) return true;
 		}
 		return false;
 	}
