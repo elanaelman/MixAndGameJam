@@ -7,6 +7,10 @@ import java.util.List;
  * Always square.
  */
 public class Board {
+	
+	public enum direction {up, down, left, right};
+	public direction[] directions = {direction.up, direction.down, direction.left, direction.right};
+	
 	//A player or ai cannot be in the same location as a wall.
 	//All locations must be with in the grid starting at (0, 0) with 
 	//dimension size*size.
@@ -45,8 +49,49 @@ public class Board {
 		return false;
 	}
 	
+	/**
+	 * Returns whether the move is to a valid, empty location.
+	 * Moves the player in a given direction if the move is valid and change is true.
+	 * 
+	 * @param d the direction to move in
+	 * @param change whether to update the player's position.
+	 * @return whether the move was valid
+	 */
+	public boolean checkPlayerMove(direction d, boolean change) {
+		switch(d) {
+		case up:
+			if (player.r-1 >= 0 && isEmpty(player.r-1, player.c)) {
+				if (change) player.r -= 1;
+				return true;
+			}
+			break;
+		case down:
+			if (player.r+1 < size && isEmpty(player.r+1, player.c)) {
+				if (change) player.r += 1;
+				return true;
+			}
+			break;
+		case left:
+			if (player.c-1 >= 0 && isEmpty(player.r, player.c-1)) {
+				if (change) player.c -= 1;
+				return true;
+			}
+			break;
+		case right:
+			if (player.c+1 < size && isEmpty(player.r, player.c+1)) {
+				if (change) player.c += 1;
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	public boolean isEmpty(Position p) {
 		return !p.equals(player) && !p.equals(ai) && !isWall(p);
+	}
+	public boolean isEmpty(int r, int c) {
+		return !player.equals(r,c) && !ai.equals(r,c) && !isWall(r, c);
 	}
 	
 	public boolean isWall(Position p) {
